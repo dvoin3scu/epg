@@ -35,8 +35,9 @@ module.exports = {
     if (!items.length) return programs
 
     for (const item of items) {
-      const start = dayjs.tz(item.StartDate, 'Europe/Lisbon').utc()
-      const stop = dayjs.tz(item.EndDate, 'Europe/Lisbon').utc()
+      // The API returns UTC times; parsing them as Europe/Lisbon shifted summer listings 1h early
+      const start = dayjs.utc(item.StartDate)
+      const stop = dayjs.utc(item.EndDate)
 
       const prog = {
         title: item.Title || 'Sem título',
